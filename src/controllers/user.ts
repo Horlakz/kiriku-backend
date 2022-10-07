@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne(email);
+    const user = await User.findOne({ where: { email } });
 
     if (user && (await bcrypt.compare(password, user.password))) {
       res.json({ token: generateToken(user.id) });
