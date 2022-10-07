@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "horlakz",
+    "password": "samijoh",
+    "database": "kiriku",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "horlakz",
+    "password": "samijoh",
+    "database": "kiriku",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "horlakz",
+    "password": "samijoh",
+    "database": "kiriku",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
