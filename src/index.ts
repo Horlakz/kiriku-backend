@@ -3,6 +3,7 @@ import express from "express";
 import morgan from "morgan";
 
 import { connectDb } from "./config/db";
+import { appError } from "./middlewares/error";
 import router from "./routes";
 
 const app = express();
@@ -12,6 +13,7 @@ connectDb();
 
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(appError);
 
 app.use("/api/v1", router);
 
