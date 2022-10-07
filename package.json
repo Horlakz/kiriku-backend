@@ -1,0 +1,33 @@
+{
+  "name": "kiriku-backend",
+  "version": "0.1.0",
+  "description": "An api for kiriku.site",
+  "main": "index.js",
+  "repository": "https://github.com/horlakz/kiriku-backend",
+  "author": "Horlakz",
+  "license": "MIT",
+  "scripts": {
+    "start": "node dist/index",
+    "dev": "nodemon src/index.ts",
+    "build": "tsc -p ."
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^18.8.1",
+    "@types/warning": "^3.0.0",
+    "morgan": "^1.10.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.8.0",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.23.2"
+  }
+}
