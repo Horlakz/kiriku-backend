@@ -17,7 +17,7 @@ import { protect } from "../middlewares/auth";
 const router = Router();
 
 // create route
-// router.post("/register", register);
+router.post("/register", register);
 router.post("/login", login);
 router.get("/user", protect, getUser);
 router.post("/forgot-password", forgotPassword);
