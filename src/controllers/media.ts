@@ -4,13 +4,12 @@ import { pipeline } from "stream/promises";
 
 export const getFile = async (req: Request, res: Response) => {
   const { key } = req.params;
-  const readStream = streamFile(key);
+  const readStream = streamFile(`projects/kiriku/${key}`);
 
   res.setHeader("Content-Type", "image/jpeg");
- try {
-  	
-  await pipeline(readStream, res);
+  try {
+    await pipeline(readStream, res);
   } catch (err: any) {
-  	res.status(err.statusCode).json({ message: err.code })
+    res.status(err.statusCode).json({ message: err.code });
   }
-}
+};

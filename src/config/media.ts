@@ -13,7 +13,7 @@ export const uploadFile = (file: Express.Multer.File) => {
   const uploadParams = {
     Bucket: process.env.AWS_BUCKET_NAME!,
     Body: fileStream,
-    Key: file.filename,
+    Key: `projects/kiriku/${file.filename}`,
   };
 
   return s3.upload(uploadParams).promise();
