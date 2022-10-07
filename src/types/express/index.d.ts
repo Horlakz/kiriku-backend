@@ -6,6 +6,7 @@ declare global {
   namespace Express {
     interface Request {
       user?: Record<User>;
+      file?: Record<File>;
     }
   }
 }
