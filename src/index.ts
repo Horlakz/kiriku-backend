@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === "development") {
 app.use(cors());
 
 // routes middeware
-app.use("/api/v1/", routes);
+app.use("/api/v2/", routes);
 
 // error handler
 app.use(appError);
