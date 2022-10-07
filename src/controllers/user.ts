@@ -5,10 +5,13 @@ import Code from "../models/code";
 import User from "../models/user";
 import { generateToken } from "../utils";
 
-// @desc create user
-// @route /auth/register
-// @method POST
-// @access Public
+/**
+ *
+ * @desc create user
+ * @route /auth/register
+ * @method POST
+ * @access Public
+ */
 export const register = async (req: Request, res: Response) => {
   // get inputs
   const { name, email, password } = req.body;
@@ -25,10 +28,13 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-// @desc login user
-// @route /auth/login
-// @method POST
-// @access Public
+/**
+ *
+ * @desc login user
+ * @route /auth/login
+ * @method POST
+ * @access Public
+ */
 export const login = async (req: Request, res: Response) => {
   // get inputs
   const { email, password } = req.body;
@@ -55,11 +61,12 @@ export const login = async (req: Request, res: Response) => {
     if (err instanceof Error) res.status(400).json({ message: err.message });
   }
 };
-
-// @desc get user
-// @route /auth/me
-// @method GET
-// @access Private
+/**
+ * @desc get user
+ * @route /auth/me
+ * @method GET
+ * @access Private
+ */
 export const getUser = async (req: Request, res: Response) => {
   try {
     // const user = await User.findById(req.user.id);
@@ -69,10 +76,13 @@ export const getUser = async (req: Request, res: Response) => {
   }
 };
 
-// @desc send code to reset password
-// @route /auth/forgot-password
-// @method POST
-// @access Public
+/**
+ *
+ * @desc send code to reset password
+ * @route /auth/forgot-password
+ * @method POST
+ * @access Public
+ */
 export const forgotPassword = async (req: Request, res: Response) => {
   // get inputs
   const { email } = req.body;
@@ -125,10 +135,13 @@ export const forgotPassword = async (req: Request, res: Response) => {
   }
 };
 
-// @desc use code to reset password
-// @route /auth/reset-password
-// @method PUT
-// @access Public
+/**
+ *
+ * @desc use code to reset password
+ * @route /auth/reset-password
+ * @method PUT
+ * @access Public
+ */
 export const resetPassword = async (req: Request, res: Response) => {
   // get inputs
   const { email, code, password } = req.body;
