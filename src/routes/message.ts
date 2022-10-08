@@ -6,10 +6,11 @@ import {
   updateMessage,
 } from "../controllers/message";
 import { isPublic } from "../middlewares/message";
+import upload from '../config/multer'
 
 const router = Router();
 
-router.post("/", createMessage);
+router.post("/", upload.single('image'), createMessage);
 router.get("/:link", isPublic, getMessages);
 router.patch("/:id", updateMessage);
 
