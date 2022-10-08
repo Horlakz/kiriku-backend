@@ -11,10 +11,10 @@ import { uploadFile } from "../config/media";
  */
 export const createMessage = async (req: Request, res: Response) => {
   const { message, link } = req.body;
-  const { file } = req;
+  const { image } = req.file;
 
   try {
-    const upload = file && (await uploadFile(file));
+    const upload = image && (await uploadFile(image));
 
     await Message.create({
       message,
