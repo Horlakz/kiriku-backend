@@ -36,11 +36,11 @@ const linkSchema = new Schema<Link>(
 );
 
 linkSchema.pre("save", async function (next) {
-  if (!this.isModified("link")) {
-    return next();
-  }
+  // if (!this.isModified("link")) {
+  //   return next();
+  // }
 
-  const link = (Math.random() * 1000000).toString();
+  const link = Math.floor(Math.random() * 1000000).toString();
   const linkExists = await model<Link>("Link").findOne({ link });
 
   if (linkExists) {
