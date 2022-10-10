@@ -113,11 +113,19 @@ export const getMessages = async (req: Request, res: Response) => {
  */
 export const updateMessage = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const { isRead } = req.body;
 
   try {
+    const message = await Message.findById(id);
+
+    if (message === null) {
+      res.status(404).json({ message: "Message not found" });
+      return;
+    }
+
     await Message.findByIdAndUpdate(
       id,
-      { isRead: true },
+      { isRead },
       { new: true, runValidators: true }
     );
 
