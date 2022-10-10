@@ -61,25 +61,41 @@ export const getMessages = async (req: Request, res: Response) => {
     const getLink = await Link.findOne({ link });
     const count = await Message.countDocuments({ link });
     const totalPages = Math.ceil(count / Number(limit));
+    const read = await Message.countDocuments({ link, isRead: true });
+    const unread = await Message.countDocuments({ link, isRead: false });
 
     if (getLink === null) {
       return res.status(404).json({ message: "Link not found" });
     }
 
     if (getLink.isPublic) {
-      const getMessages = await Message.find({ link })
+      const messages = await Message.find({ link })
         .limit(Number(limit))
         .skip((Number(page) - 1) * Number(limit));
 
-      res.json({ messages: getMessages, page, totalPages });
+      res.json({
+        messages,
+        page,
+        totalPages,
+        read,
+        unread,
+        totalMessages: count,
+      });
       return;
     } else {
-      const getMessages = await Message.find({ link })
+      const messages = await Message.find({ link })
         .sort({ isRead: 1 })
         .limit(Number(limit))
         .skip((Number(page) - 1) * Number(limit));
 
-      res.json({ messages: getMessages, page, totalPages });
+      res.json({
+        messages,
+        page,
+        totalPages,
+        read,
+        unread,
+        total: count,
+      });
       return;
     }
   } catch (err) {
