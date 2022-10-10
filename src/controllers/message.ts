@@ -123,6 +123,11 @@ export const updateMessage = async (req: Request, res: Response) => {
       return;
     }
 
+    if (isRead === undefined) {
+      res.status(400).json({ message: "isRead field is required" });
+      return;
+    }
+
     await Message.findByIdAndUpdate(
       id,
       { isRead },
