@@ -19,7 +19,7 @@ export const createLink = async (req: Request, res: Response) => {
     });
 
     // send response
-    res.status(201).json({ link: newLink.link });
+    res.status(201).json(newLink.link);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ message: err.message });
   }
@@ -35,7 +35,7 @@ export const getLinks = async (req: Request, res: Response) => {
     const links = await Link.find({ user: req.user._id });
 
     // send response
-    res.status(200).json({ links });
+    res.status(200).json(links);
   } catch (err) {
     if (err instanceof Error) res.status(400).json({ message: err.message });
   }
