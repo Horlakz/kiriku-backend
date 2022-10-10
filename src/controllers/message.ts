@@ -61,8 +61,11 @@ export const getMessages = async (req: Request, res: Response) => {
     const getLink = await Link.findOne({ link });
     const count = await Message.countDocuments({ link });
     const totalPages = Math.ceil(count / Number(limit));
-    const read = await Message.countDocuments({ link, isRead: true });
-    const unread = await Message.countDocuments({ link, isRead: false });
+    const readMessages = await Message.countDocuments({ link, isRead: true });
+    const unreadMessages = await Message.countDocuments({
+      link,
+      isRead: false,
+    });
 
     if (getLink === null) {
       return res.status(404).json({ message: "Link not found" });
@@ -77,8 +80,8 @@ export const getMessages = async (req: Request, res: Response) => {
         messages,
         page,
         totalPages,
-        read,
-        unread,
+        readMessages,
+        unreadMessages,
         totalMessages: count,
       });
       return;
@@ -92,7 +95,7 @@ export const getMessages = async (req: Request, res: Response) => {
         messages,
         page,
         totalPages,
-        read,
+        read: readMessages,
         unread,
         total: count,
       });
