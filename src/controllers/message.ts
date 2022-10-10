@@ -14,13 +14,23 @@ export const createMessage = async (req: Request, res: Response) => {
   const { file } = req;
 
   try {
-    // check if link isActive
-    const linkIsActive = await Link.findOne({ link, isActive: true });
-
+    // check if link exists
+    const linkExists = await Link.findOne({ link });
     const upload = file && (await uploadFile(file));
 
-    if (!linkIsActive) {
-      return res.status(400).json({ message: "Link is not active" });
+    if (!linkExists) {
+      res.status(404).json({ message: "Link not found" });
+      return;
+    }
+
+    if (linkExists && !linkExists.isActive) {
+      res.status(400).json({ message: "Link is not active" });
+      return;
+    }
+
+    if (!message) {
+      res.status(400).json({ message: "Message is required" });
+      return;
     }
 
     await Message.create({
@@ -31,7 +41,10 @@ export const createMessage = async (req: Request, res: Response) => {
 
     res.status(201).json({ message: "Message sent successfully" });
   } catch (err) {
-    if (err instanceof Error) res.json({ message: err.message });
+    if (err instanceof Error) {
+      res.status(400).json({ message: err.message });
+      return;
+    }
   }
 };
 
