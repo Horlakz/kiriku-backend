@@ -25,7 +25,7 @@ export const createMessage = async (req: Request, res: Response) => {
 
     await Message.create({
       message,
-      image: upload ? upload.Key : null,
+      image: upload ? upload.Key.split("/")[2] : null,
       link,
     });
 
