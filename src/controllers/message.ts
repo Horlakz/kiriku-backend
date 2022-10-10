@@ -14,7 +14,14 @@ export const createMessage = async (req: Request, res: Response) => {
   const { file } = req;
 
   try {
+    // check if link isActive
+    const linkIsActive = await Link.findOne({ link, isActive: true });
+
     const upload = file && (await uploadFile(file));
+
+    if (!linkIsActive) {
+      return res.status(400).json({ message: "Link is not active" });
+    }
 
     await Message.create({
       message,
