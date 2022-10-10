@@ -1,7 +1,7 @@
 import { Document, Schema, model, Types } from "mongoose";
 
 interface Message extends Document {
-  link: Types.ObjectId;
+  link: string;
   message: string;
   image: string;
   isRead: boolean;
@@ -10,9 +10,8 @@ interface Message extends Document {
 const messageSchema = new Schema<Message>(
   {
     link: {
-      type: Schema.Types.ObjectId,
+      type: String,
       required: [true, "Link is required"],
-      ref: "Link",
     },
     message: {
       type: String,
