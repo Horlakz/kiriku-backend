@@ -6,12 +6,13 @@ import {
   updateMessage,
 } from "../controllers/message";
 import { isPublic } from "../middlewares/message";
-import upload from '../config/multer'
+import { protect } from "../middlewares/auth";
+import upload from "../config/multer";
 
 const router = Router();
 
-router.post("/", upload.single('image'), createMessage);
+router.post("/", upload.single("image"), createMessage);
 router.get("/:link", isPublic, getMessages);
-router.patch("/:id", updateMessage);
+router.patch("/:id", protect, updateMessage);
 
 export default router;
