@@ -49,11 +49,11 @@ userSchema.pre<User>("save", async function (next) {
   // get the current date and save it to the updatedAt field
   this.updatedAt = new Date();
 
-  // create a salt and hash the password
   if (!this.isModified("password")) {
     return next();
   }
 
+  // create a salt and hash the password
   if (this.isModified("password")) {
     const salt: string = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
