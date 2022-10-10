@@ -95,8 +95,8 @@ export const getMessages = async (req: Request, res: Response) => {
         messages,
         page,
         totalPages,
-        read: readMessages,
-        unread,
+        readMessages,
+        unreadMessages,
         total: count,
       });
       return;
