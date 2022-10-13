@@ -1,0 +1,50 @@
+name: Deploy to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Generate .env file
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_PORT: ${{ secrets.PORT }}
+          envkey_NODE_ENV: ${{ secrets.NODE_ENV }}
+          envkey_CORS_ORIGIN: ${{ secrets.CORS_ORIGIN }}
+          envkey_BASE_URL: ${{ secrets.BASE_URL }}
+          envkey_MONGO_URI: ${{ secrets.MONGO_URI }}
+          envkey_JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          envkey_JWT_EXPIRES_IN: ${{ secrets.JWT_EXPIRES_IN }}
+          envkey_EMAIL: ${{ secrets.EMAIL }}
+          envkey_EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          envkey_EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          envkey_AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          envkey_AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
+          envkey_AWS_BUCKET_REGION: ${{ secrets.AWS_BUCKET_REGION }}
+          envkey_AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+           
+      - name: Build Docker images
+        run: |
+          docker build . -t kiriku-api:${{ github.sha }}
+
+  run:
+    runs-on: self-hosted
+
+    needs:
+      - build
+
+    steps:
+      - name: remove old container
+        run: |
+          docker rm --force kiriku-api
+
+      - name: run new container
+        run: |
+          docker run -d --name kiriku-api -p 3100:4000 kiriku-api:${{ github.sha }}
