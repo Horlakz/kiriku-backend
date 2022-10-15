@@ -71,12 +71,6 @@ export const getMessages = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Link not found" });
     }
 
-    if (getLink) {
-      if (req.user._id !== getLink.user) {
-        return res.status(401).json({ message: "Unauthorized" });
-      }
-    }
-
     if (getLink.isPublic) {
       const messages = await Message.find({ link })
         .limit(Number(limit))
