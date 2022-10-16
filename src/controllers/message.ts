@@ -71,25 +71,34 @@ export const getMessages = async (req: Request, res: Response) => {
       return res.status(404).json({ message: "Link not found" });
     }
 
-    if (getLink.user.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: "Forbidden" });
-    }
-
     if (getLink.isPublic) {
+      if (req.user) {
+        const messages = await Message.find({ link })
+          .sort({ isRead: 1 })
+          .skip((Number(page) - 1) * Number(limit))
+          .limit(Number(limit));
+
+        return res.status(200).json({
+          messages,
+          page,
+          totalPages,
+          readMessages,
+          unreadMessages,
+          totalMessages: count,
+        });
+      }
+
       const messages = await Message.find({ link })
         .limit(Number(limit))
         .skip((Number(page) - 1) * Number(limit));
 
-      res.json({
-        messages,
-        page,
-        totalPages,
-        readMessages,
-        unreadMessages,
-        totalMessages: count,
-      });
+      res.json({ messages });
       return;
     } else {
+      if (getLink.user.toString() !== req.user._id.toString()) {
+        return res.status(403).json({ message: "Forbidden" });
+      }
+
       const messages = await Message.find({ link })
         .sort({ isRead: 1 })
         .limit(Number(limit))
