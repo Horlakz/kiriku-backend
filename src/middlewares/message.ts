@@ -8,6 +8,8 @@ export const isPublic = async (
   res: Response,
   next: NextFunction
 ) => {
+  const authHeader: string | undefined = req.headers["authorization"];
+
   const { link } = req.params;
 
   try {
@@ -15,6 +17,11 @@ export const isPublic = async (
 
     if (getLink === null) {
       return res.status(404).json({ message: "Link not found" });
+    }
+
+    if (getLink.isPublic && authHeader) {
+      protect(req, res, next);
+      return;
     }
 
     if (getLink.isPublic) {
