@@ -29,7 +29,7 @@ jobs:
           envkey_AWS_BUCKET_NAME: ${{ secrets.AWS_BUCKET_NAME }}
           envkey_AWS_BUCKET_REGION: ${{ secrets.AWS_BUCKET_REGION }}
           envkey_AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-           
+
       - name: Build Docker images
         run: |
           docker build . -t kiriku-api:${{ github.sha }}
@@ -47,4 +47,4 @@ jobs:
 
       - name: run new container
         run: |
-          docker run -d --restart unless-stopped --name kiriku-api -p 3100:4000 kiriku-api:${{ github.sha }}
+          docker run -d --restart unless-stopped --name kiriku-api -p 3200:4000 kiriku-api:${{ github.sha }}
