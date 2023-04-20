@@ -13,7 +13,7 @@ const sendEmail = async (email: string, subject: string, html: string) => {
   });
 
   const mailOptions: nodemailer.SendMailOptions = {
-    from: `"Pheivez Arts" <${process.env.EMAIL}>`,
+    from: `"Kiriku" <${process.env.EMAIL}>`,
     to: email,
     subject,
     html,
