@@ -17,6 +17,13 @@ export const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
   try {
+    const checkEmail = await User.findOne({ email });
+
+    if (checkEmail) {
+      res.status(400).json({ message: "Email already exists" });
+      return;
+    }
+
     const user = await User.create({ name, email, password });
 
     // send response
