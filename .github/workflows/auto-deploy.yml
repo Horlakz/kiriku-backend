@@ -47,4 +47,4 @@ jobs:
 
       - name: run new container
         run: |
-          docker run -d --restart unless-stopped --name kiriku-api -p 3200:4000 kiriku-api:${{ github.sha }}
+          docker run -d --restart unless-stopped --name kiriku-api -p 2300:4000 kiriku-api:${{ github.sha }}
