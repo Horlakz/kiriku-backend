@@ -13,7 +13,7 @@ export const uploadFile = (file: Express.Multer.File) => {
   const uploadParams = {
     Bucket: process.env.AWS_BUCKET_NAME!,
     Body: fileStream,
-    Key: `projects/kiriku/${file.filename}`,
+    Key: getFileKey(file.originalname),
   };
 
   return s3.upload(uploadParams).promise();
@@ -36,3 +36,10 @@ export const deleteFile = (fileKey: string) => {
 
   return s3.deleteObject(deleteParams).promise();
 };
+
+function getFileKey(filename: string) {
+  const timestamp = new Date().getTime();
+  const ext = filename.split(".").pop();
+
+  return `kiriku/${timestamp}.${ext}`;
+}
